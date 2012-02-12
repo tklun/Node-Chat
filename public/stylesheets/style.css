@@ -6,7 +6,49 @@ a {
   color: #00B7FF;
 }
 
+h2 {
+  margin-top:0;
+}
+
 canvas {
   background-color: #000;
   cursor: none;
+}
+
+.chat {
+  background-color:rgba(120,120,120,.5);
+  position:absolute;
+  top:0;
+  color:#eee;
+}
+
+.users-container {
+  display:inline-block;
+  vertical-align:top;
+  width:100px;
+  border-right:1px solid #ccc;
+  height:100%;
+  padding:10px;
+  overflow:scroll-y;
+}
+
+.users-container .users-list {
+
+}
+
+.conversation-container {
+  display:inline-block;
+  vertical-align:top;
+  width:300px;
+  height:100%;
+  overflow:scroll-y;
+  padding:10px;
+}
+
+.conversation-container .conversation {
+
+}
+
+.conversation-container .data {
+  width:200px;
 }
