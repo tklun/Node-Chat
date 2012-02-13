@@ -48,6 +48,13 @@ io.sockets.on('connection', function (socket) {
     io.sockets.emit('updatechat', socket.username, data);
   });
 
+  // when the client emits 'sendcircle', this listens and executes
+  socket.on('sendcircle', function (data) {
+    console.log(data);
+    // we tell the client to execute 'updatesocketcircle' with 2 parameters
+    io.sockets.emit('updatesocketcircle', socket.username, data);
+  });
+
   // when the client emits 'adduser', this listens and executes
   socket.on('adduser', function(username){
     // we store the username in the socket session for this client
