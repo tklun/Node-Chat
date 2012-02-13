@@ -1,5 +1,6 @@
 body {
   margin:0;
+  background-color: #000;
 }
 
 a {
@@ -11,8 +12,18 @@ h2 {
 }
 
 canvas {
-  background-color: #000;
   cursor: none;
+  position:absolute;
+  top:0;
+  left:441px;
+}
+
+#user-canvas {
+  z-index:500;
+}
+
+#socket-canvas {
+  z-index:1;
 }
 
 .chat {

@@ -1,4 +1,4 @@
-init = function() {
+var init = function () {
   socketCircle.init();
   canvas = document.getElementById('user-canvas');
   canvas.setAttribute('width', window.innerWidth );
@@ -7,16 +7,17 @@ init = function() {
   listen();
   (function animloop(){
     requestAnimFrame(animloop);
-    run();
+    // run();
+    render(canvas, ctx, Circles);
   })();
 };
 
 var Circles = [];
 
-listen = function() {
+var listen = function () {
   canvas.addEventListener('mousemove', function(e) {
-    var mx = e.layerX,// - e.currentTarget.offsetLeft,
-        my = e.layerY,// - e.currentTarget.offsetTop,
+    var mx = e.offsetX,
+        my = e.offsetY,
         circle = new Circle(mx, my);
     Circles.push(circle);
 
@@ -42,19 +43,31 @@ listen = function() {
   });
 };
 
-var run = function() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+var render = function(canvas, context, circlesArray) {
+  context.clearRect(0, 0, canvas.width, canvas.height);
   var CirclesNext = [];
-  for(var i = 0; i < Circles.length; i++) {
-    Circles[i].create();
-    if(Circles[i].i <= 30) {
-      CirclesNext.push(Circles[i]);
+  for(var i = 0; i < circlesArray.length; i++) {
+    circlesArray[i].create();
+    if(circlesArray[i].i <= 30) {
+      CirclesNext.push(circlesArray[i]);
     }
   }
-  Circles = CirclesNext;
+  circlesArray = CirclesNext;
 };
 
-Circle = function(mx, my) {
+// var run = function() {
+//   ctx.clearRect(0, 0, canvas.width, canvas.height);
+//   var CirclesNext = [];
+//   for(var i = 0; i < Circles.length; i++) {
+//     Circles[i].create();
+//     if(Circles[i].i <= 30) {
+//       CirclesNext.push(Circles[i]);
+//     }
+//   }
+//   Circles = CirclesNext;
+// };
+
+var Circle = function(mx, my) {
   var thisCircle = {},
     r = Math.floor(Math.random() * 256),
     g = Math.floor(Math.random() * 256),
@@ -75,17 +88,6 @@ Circle = function(mx, my) {
 
   return thisCircle;
 };
-
-window.requestAnimFrame = (function(){
-  return  window.requestAnimationFrame       ||
-          window.webkitRequestAnimationFrame ||
-          window.mozRequestAnimationFrame    ||
-          window.oRequestAnimationFrame      ||
-          window.msRequestAnimationFrame     ||
-          function( callback ){
-            window.setTimeout(callback, 1000 / 60);
-          };
-})();
 
 window.onload = function () {
   init();
