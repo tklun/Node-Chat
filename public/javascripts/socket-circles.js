@@ -1,4 +1,5 @@
 var socketCircle = socketCircle || {};
+
 socketCircle.init = function() {
   socketCanvas = document.getElementById('socket-canvas');
   socketCanvas.setAttribute('width', window.innerWidth );
@@ -8,6 +9,7 @@ socketCircle.init = function() {
 
 socketCircle.Circles = [];
 socketCircle.Circles.i = 0;
+
 socketCircle.create = function(circle, context) {
   var r = Math.floor(Math.random() * 256),
       g = Math.floor(Math.random() * 256),

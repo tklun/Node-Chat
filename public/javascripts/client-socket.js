@@ -1,10 +1,13 @@
-var socket = io.connect('http://localhost:8888');
+var socket = io.connect('http://10.0.1.22:8888');
 
 // on connection to server, ask for user's name with an anonymous callback
 socket.on('connect', function(){
+  GLOBAL_USERNAME = prompt("What's your name?");
   // call the server-side function 'adduser' and send one parameter (value of prompt)
-  socket.emit('adduser', prompt("What's your name?"));
+  socket.emit('adduser', GLOBAL_USERNAME);
 });
+
+var GLOBAL_USERNAME;
 
 // listener, whenever the server emits 'updatechat', this updates the chat body
 socket.on('updatechat', function (username, data) {
