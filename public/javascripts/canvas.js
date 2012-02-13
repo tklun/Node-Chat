@@ -39,6 +39,8 @@ var listen = function () {
     } else {
       console.log('Guest circle: ', circle);
       socketCircle.create(circle, socketCtx);
+      //Try below code instead of line 41
+      //circle.create(socketCtx);
     }
   });
 };
@@ -47,7 +49,7 @@ var render = function(canvas, context, circlesArray) {
   context.clearRect(0, 0, canvas.width, canvas.height);
   var CirclesNext = [];
   for(var i = 0; i < circlesArray.length; i++) {
-    circlesArray[i].create();
+    circlesArray[i].create(context);
     if(circlesArray[i].i <= 30) {
       CirclesNext.push(circlesArray[i]);
     }
@@ -67,27 +69,51 @@ var render = function(canvas, context, circlesArray) {
 //   Circles = CirclesNext;
 // };
 
+/** Start original working code **/
+// var Circle = function(mx, my) {
+//   var thisCircle = {},
+//     r = Math.floor(Math.random() * 256),
+//     g = Math.floor(Math.random() * 256),
+//     b = Math.floor(Math.random() * 256);
+//   thisCircle.mx = mx;
+//   thisCircle.my = my;
+//   thisCircle.i = 0;
+
+//   thisCircle.create = function() {
+//     if (thisCircle.i <= 30) {
+//       ctx.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + ((30 - thisCircle.i) / 30) + ')';
+//       ctx.beginPath();
+//       ctx.arc(thisCircle.mx, thisCircle.my, thisCircle.i * 2, 0, Math.PI * 2, true);
+//       ctx.fill();
+//       thisCircle.i++;
+//     }
+//   };
+
+//   return thisCircle;
+// };
+/** End original working code **/
+
+/** Start experimental prototype code **/
 var Circle = function(mx, my) {
-  var thisCircle = {},
-    r = Math.floor(Math.random() * 256),
-    g = Math.floor(Math.random() * 256),
-    b = Math.floor(Math.random() * 256);
-  thisCircle.mx = mx;
-  thisCircle.my = my;
-  thisCircle.i = 0;
-
-  thisCircle.create = function() {
-    if (thisCircle.i <= 30) {
-      ctx.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + ((30 - thisCircle.i) / 30) + ')';
-      ctx.beginPath();
-      ctx.arc(thisCircle.mx, thisCircle.my, thisCircle.i * 2, 0, Math.PI * 2, true);
-      ctx.fill();
-      thisCircle.i++;
-    }
-  };
-
-  return thisCircle;
+  this.r = Math.floor(Math.random() * 256),
+  this.g = Math.floor(Math.random() * 256),
+  this.b = Math.floor(Math.random() * 256);
+  this.mx = mx;
+  this.my = my;
+  this.i = 0;
 };
+
+Circle.prototype.create = function(context) {
+  if (this.i <= 30) {
+    context.fillStyle = 'rgba(' + this.r + ',' + this.g + ',' + this.b + ',' + ((30 - this.i) / 30) + ')';
+    context.beginPath();
+    context.arc(this.mx, this.my, this.i * 2, 0, Math.PI * 2, true);
+    context.fill();
+    this.i++;
+  }
+};
+
+/** End experimental prototype code **/
 
 window.onload = function () {
   init();

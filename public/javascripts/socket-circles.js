@@ -6,11 +6,12 @@ socketCircle.init = function() {
   socketCanvas.setAttribute('height', window.innerHeight );
   socketCtx = socketCanvas.getContext('2d');
 
-  //(function animloop(){
-  //  requestAnimFrame(animloop);
-  //  render(socketCanvas, socketCtx, socketCircle.Circles);
-    //socketCtx.clearRect(0, 0, socketCanvas.width, socketCanvas.height);
-  //})();
+// Fires off no method create when used. Data isn't passed along? Point coords are passed along, but no moethod
+  // (function animloop(){
+  //   requestAnimFrame(animloop);
+  //   render(socketCanvas, socketCtx, socketCircle.Circles);
+  //   socketCtx.clearRect(0, 0, socketCanvas.width, socketCanvas.height);
+  // })();
 };
 
 socketCircle.Circles = [];
