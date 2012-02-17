@@ -6,7 +6,7 @@ socketCircle.init = function() {
   socketCanvas.setAttribute('height', window.innerHeight );
   socketCtx = socketCanvas.getContext('2d');
 
-// Fires off no method create when used. Data isn't passed along? Point coords are passed along, but no moethod
+// Data isn't passed along? Point coords are go through, but not methods. Socket.io converts data to JSON before sending.
   // (function animloop(){
   //   requestAnimFrame(animloop);
   //   render(socketCanvas, socketCtx, socketCircle.Circles);

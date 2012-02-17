@@ -7,7 +7,6 @@ var init = function () {
   listen();
   (function animloop(){
     requestAnimFrame(animloop);
-    // run();
     render(canvas, ctx, Circles);
   })();
 };
@@ -29,8 +28,6 @@ var listen = function () {
     var mx = e.layerX - e.currentTarget.offsetLeft,
         my = e.layerY - e.currentTarget.offsetTop,
         circle = new Circle(mx, my);
-    // Emits circle on click
-    //socket.emit('sendcircle', circle);
   });
 
   socket.on('updatesocketcircle', function(username, circle) {
@@ -56,42 +53,6 @@ var render = function(canvas, context, circlesArray) {
   }
   circlesArray = CirclesNext;
 };
-
-// var run = function() {
-//   ctx.clearRect(0, 0, canvas.width, canvas.height);
-//   var CirclesNext = [];
-//   for(var i = 0; i < Circles.length; i++) {
-//     Circles[i].create();
-//     if(Circles[i].i <= 30) {
-//       CirclesNext.push(Circles[i]);
-//     }
-//   }
-//   Circles = CirclesNext;
-// };
-
-/** Start original working code **/
-// var Circle = function(mx, my) {
-//   var thisCircle = {},
-//     r = Math.floor(Math.random() * 256),
-//     g = Math.floor(Math.random() * 256),
-//     b = Math.floor(Math.random() * 256);
-//   thisCircle.mx = mx;
-//   thisCircle.my = my;
-//   thisCircle.i = 0;
-
-//   thisCircle.create = function() {
-//     if (thisCircle.i <= 30) {
-//       ctx.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + ((30 - thisCircle.i) / 30) + ')';
-//       ctx.beginPath();
-//       ctx.arc(thisCircle.mx, thisCircle.my, thisCircle.i * 2, 0, Math.PI * 2, true);
-//       ctx.fill();
-//       thisCircle.i++;
-//     }
-//   };
-
-//   return thisCircle;
-// };
-/** End original working code **/
 
 /** Start experimental prototype code **/
 var Circle = function(mx, my) {
