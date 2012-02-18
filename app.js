@@ -1,6 +1,9 @@
 
 /**
  * Module dependencies.
+ * External:  Express
+ *            Socket.io
+ * Internal:  routes/index.js
  */
 
 var express = require('express'),
@@ -42,40 +45,35 @@ var usernames = {};
 
 io.sockets.on('connection', function (socket) {
 
-  // when the client emits 'sendchat', this listens and executes
+  // Listen for messages on 'sendchat'. When received,
+  // send the message back to the front-end with a username and message.
   socket.on('sendchat', function (data) {
-    // we tell the client to execute 'updatechat' with 2 parameters
     io.sockets.emit('updatechat', socket.username, data);
   });
 
-  // when the client emits 'sendcircle', this listens and executes
+  // Listen for messages on 'sendcircle'. When a circle has been received,
+  // send the username and circle data to the front-end.
   socket.on('sendcircle', function (data) {
     console.log(data);
-    // we tell the client to execute 'updatesocketcircle' with 2 parameters
     io.sockets.emit('updatesocketcircle', socket.username, data);
   });
 
-  // when the client emits 'adduser', this listens and executes
+  // When a user first connects, they are asked to provide a username.
+  // Take this username, add it to the username array, send a connection
+  // message, and update the front-end user list.
   socket.on('adduser', function(username){
-    // we store the username in the socket session for this client
     socket.username = username;
-    // add the client's username to the global list
     usernames[username] = username;
-    // echo to client they've connected
     socket.emit('updatechat', 'SERVER', 'you have connected');
-    // echo globally (all clients) that a person has connected
     socket.broadcast.emit('updatechat', 'SERVER', username + ' has connected');
-    // update the list of users in chat, client-side
     io.sockets.emit('updateusers', usernames);
   });
 
-  // when the user disconnects.. perform this
+  // Upon disconnection, remove the username from the usernames array and send
+  // the front-end a new user list. Finally broadcast a global message the user has disconnected.
   socket.on('disconnect', function(){
-    // remove the username from global usernames list
     delete usernames[socket.username];
-    // update list of users in chat, client-side
     io.sockets.emit('updateusers', usernames);
-    // echo globally that this client has left
     socket.broadcast.emit('updatechat', 'SERVER', socket.username + ' has disconnected');
   });
 });

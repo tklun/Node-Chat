@@ -1,10 +1,10 @@
 var socketCircle = socketCircle || {};
 
-socketCircle.init = function() {
+socketCircle.init = function () {
   socketCanvas = document.getElementById('socket-canvas');
-  socketCanvas.setAttribute('width', window.innerWidth );
-  socketCanvas.setAttribute('height', window.innerHeight );
-  socketCtx = socketCanvas.getContext('2d');
+  socketCanvas.setAttribute('width', window.innerWidth);
+  socketCanvas.setAttribute('height', window.innerHeight);
+  var socketCtx = socketCanvas.getContext('2d');
 
 // Data isn't passed along? Point coords are go through, but not methods. Socket.io converts data to JSON before sending.
   // (function animloop(){

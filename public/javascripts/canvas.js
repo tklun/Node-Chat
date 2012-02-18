@@ -1,17 +1,17 @@
+var Circles = [];
+
 var init = function () {
   socketCircle.init();
-  canvas = document.getElementById('user-canvas');
-  canvas.setAttribute('width', window.innerWidth );
-  canvas.setAttribute('height', window.innerHeight );
-  ctx = canvas.getContext('2d');
+  var canvas = document.getElementById('user-canvas'),
+      ctx = canvas.getContext('2d');
+  canvas.setAttribute('width', window.innerWidth);
+  canvas.setAttribute('height', window.innerHeight);
   listen();
-  (function animloop(){
+  (function animloop() {
     requestAnimFrame(animloop);
     render(canvas, ctx, Circles);
   })();
 };
-
-var Circles = [];
 
 var listen = function () {
   canvas.addEventListener('mousemove', function(e) {
@@ -24,13 +24,13 @@ var listen = function () {
     socket.emit('sendcircle', circle);
   });
 
-  canvas.addEventListener('click', function(e) {
+  canvas.addEventListener('click', function (e) {
     var mx = e.layerX - e.currentTarget.offsetLeft,
         my = e.layerY - e.currentTarget.offsetTop,
         circle = new Circle(mx, my);
   });
 
-  socket.on('updatesocketcircle', function(username, circle) {
+  socket.on('updatesocketcircle', function (username, circle) {
     if (username === GLOBAL_USERNAME) {
       console.log('My own circle: ', circle);
     } else {
@@ -42,7 +42,7 @@ var listen = function () {
   });
 };
 
-var render = function(canvas, context, circlesArray) {
+var render = function (canvas, context, circlesArray) {
   context.clearRect(0, 0, canvas.width, canvas.height);
   var CirclesNext = [];
   for(var i = 0; i < circlesArray.length; i++) {
@@ -55,7 +55,7 @@ var render = function(canvas, context, circlesArray) {
 };
 
 /** Start experimental prototype code **/
-var Circle = function(mx, my) {
+var Circle = function (mx, my) {
   this.r = Math.floor(Math.random() * 256),
   this.g = Math.floor(Math.random() * 256),
   this.b = Math.floor(Math.random() * 256);
@@ -64,7 +64,7 @@ var Circle = function(mx, my) {
   this.i = 0;
 };
 
-Circle.prototype.create = function(context) {
+Circle.prototype.create = function (context) {
   if (this.i <= 30) {
     context.fillStyle = 'rgba(' + this.r + ',' + this.g + ',' + this.b + ',' + ((30 - this.i) / 30) + ')';
     context.beginPath();

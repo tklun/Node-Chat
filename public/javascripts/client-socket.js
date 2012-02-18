@@ -1,50 +1,51 @@
 var socket = io.connect('/', {port: 443}),
     GLOBAL_USERNAME;
 
-// on connection to server, ask for user's name with an anonymous callback
-socket.on('connect', function(){
+// When the socket connection has been made ask for a username.
+socket.on('connect', function () {
   GLOBAL_USERNAME = prompt("What's your name?");
-  // call the server-side function 'adduser' and send one parameter (value of prompt)
+  // Tell the server to add username.
   socket.emit('adduser', GLOBAL_USERNAME);
 });
 
-// listener, whenever the server emits 'updatechat', this updates the chat body
+// Listen for messages on 'updatechat'. When received, append the username and message to the conversation. Not optimal code, but it does the job for demo purposes.
 socket.on('updatechat', function (username, data) {
-  $('.conversation').append('<b>'+username + ':</b> ' + data + '<br>');
+  $('.conversation').append('<strong>' + username + ':</strong> ' + data + '<br>');
 });
 
-// listener, whenever the server emits 'updateusers', this updates the username list
-socket.on('updateusers', function(data) {
+// Listen for messages on 'updateusers'. When received, empty the user list and re-add all usernames to the list.
+socket.on('updateusers', function (data) {
   $('.users-list').empty();
-  $.each(data, function(key, value) {
+  $.each(data, function (key, value) {
     $('.users-list').append('<div>' + key + '</div>');
   });
 });
 
+// Gather message from the input field, clear the input field, and send it to the server.
 var sendChatMessage = function () {
   var message = $('.data').val();
   $('.data').val('');
-  // tell server to execute 'sendchat' and send along message
   socket.emit('sendchat', message);
 };
 
-$(document).ready(function() {
-  $('.clear-data .clear-chat').bind('click', function(event) {
+$(document).ready(function () {
+  // Listeners for clearing functionality and sending messsages.
+  $('.clear-data .clear-chat').bind('click', function (event) {
     event.preventDefault();
     $('.conversation').empty();
   });
 
-  $('.clear-data .clear-canvas').bind('click', function(event) {
+  $('.clear-data .clear-canvas').bind('click', function (event) {
     event.preventDefault();
     socketCtx.clearRect(0, 0, socketCanvas.width, socketCanvas.height);
   });
 
-  $('#datasend').bind('click', function() {
+  $('#datasend').bind('click', function () {
     sendChatMessage();
   });
 
-  $('.data').keypress(function(event) {
-    if(event.which == 13) {
+  $('.data').keypress(function (event) {
+    if (event.which === 13) {
       sendChatMessage();
     }
   });
