@@ -2,8 +2,8 @@ var Circles = [];
 
 var init = function () {
   socketCircle.init();
-  var canvas = document.getElementById('user-canvas'),
-      ctx = canvas.getContext('2d');
+  canvas = document.getElementById('user-canvas'),
+  ctx = canvas.getContext('2d');
   canvas.setAttribute('width', window.innerWidth);
   canvas.setAttribute('height', window.innerHeight);
   listen();
