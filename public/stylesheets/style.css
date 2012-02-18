@@ -15,7 +15,7 @@ canvas {
   cursor: none;
   position:absolute;
   top:0;
-  left:441px;
+  /*left:441px;*/
 }
 
 #user-canvas {
@@ -31,6 +31,7 @@ canvas {
   position:absolute;
   top:0;
   color:#eee;
+  z-index:900;
 }
 
 .users-container {
