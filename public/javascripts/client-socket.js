@@ -1,4 +1,4 @@
-var socket = io.connect('http://10.101.26.78:80'),
+var socket = io.connect('/', {port: 443}),
     GLOBAL_USERNAME;
 
 // on connection to server, ask for user's name with an anonymous callback
